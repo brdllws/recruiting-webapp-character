@@ -4,12 +4,12 @@ import { ATTRIBUTE_LIST, CLASS_LIST, SKILL_LIST } from './consts';
 
 
 function App() {
-  const strength = useState<number>(0);
-  const dexterity = useState<number>(0);
-  const constitution = useState<number>(0);
-  const intelligence = useState<number>(0);
-  const wisdom = useState<number>(0);
-  const charisma = useState<number>(0);
+  const strength = useState<number>(10);
+  const dexterity = useState<number>(10);
+  const constitution = useState<number>(10);
+  const intelligence = useState<number>(10);
+  const wisdom = useState<number>(10);
+  const charisma = useState<number>(10);
   const stateList = [strength, dexterity, constitution, intelligence, wisdom, charisma];
   const [selectedClass, setSelectedClass] = useState(null);
 
@@ -48,6 +48,7 @@ function App() {
           {stateList.map((content, index) => (
             <div key={index}>
               {`${ATTRIBUTE_LIST[index]}: ${content[0]}`}
+              {` (Modifier: ${Math.floor((content[0] - 10) / 2)})`}
               <button onClick={() => content[1](content[0]+1)}>+</button>
               <button onClick={() => content[1](content[0]-1)}>-</button>
             </div>
