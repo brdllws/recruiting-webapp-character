@@ -11,6 +11,7 @@ function App() {
   const wisdom = useState<number>(0);
   const charisma = useState<number>(0);
   const stateList = [strength, dexterity, constitution, intelligence, wisdom, charisma];
+  const [selectedClass, setSelectedClass] = useState(null);
 
   const meetsReqs = (name) => {
     for (let i = 0; i < stateList.length; i++) {
@@ -20,6 +21,22 @@ function App() {
     };
     return true;
   };
+
+  const displayClassReqs = (name) => {
+    return (
+      <div>
+        <h3>{name}</h3>
+        <ul>
+          {ATTRIBUTE_LIST.map((attribute, index) => (
+            <li key={index}>
+              {attribute}: {CLASS_LIST[name][attribute]}
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  };
+
 
   return (
     <div className="App">
@@ -37,9 +54,12 @@ function App() {
           ))}
         </div>
         <div className="App-div">
-          <p>Barbarian {meetsReqs('Barbarian') ? '✅' : null}</p>
-          <p>Wizard {meetsReqs('Wizard') ? '✅' : null}</p>
-          <p>Bard {meetsReqs('Bard') ? '✅' : null}</p>
+          <p onClick={() => setSelectedClass('Barbarian')}>Barbarian {meetsReqs('Barbarian') ? '✅' : null}</p>
+          <p onClick={() => setSelectedClass('Wizard')}>Wizard {meetsReqs('Wizard') ? '✅' : null}</p>
+          <p onClick={() => setSelectedClass('Bard')}>Bard {meetsReqs('Bard') ? '✅' : null}</p>
+        </div>
+        <div className="App-div">
+          {selectedClass && displayClassReqs(selectedClass)}
         </div>
       </section>   
     </div>
