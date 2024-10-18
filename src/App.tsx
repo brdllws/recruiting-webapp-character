@@ -37,6 +37,16 @@ function App() {
     );
   };
 
+  const init = {};
+  for (let i = 0; i < SKILL_LIST.length; i++) {
+    init[SKILL_LIST[i]['name']] = 0;
+  }
+  const [skillPoints, setSkillPoints] = useState(init);
+
+  const getModifier = (num) => {
+    return Math.floor((num - 10) / 2);
+  };
+
 
   return (
     <div className="App">
@@ -61,6 +71,35 @@ function App() {
         </div>
         <div className="App-div">
           {selectedClass && displayClassReqs(selectedClass)}
+        </div>
+        <div className="App-div">
+          {SKILL_LIST.map((skill, index) => {
+            const modifier = getModifier(stateList[ATTRIBUTE_LIST.indexOf(skill['attributeModifier'])][0])
+            const maxSkillPoints = 10 + (4 * getModifier(stateList[3][0]));
+
+            return (
+            <div key={index}>
+              {`${skill['name']} - points: ${skillPoints[skill['name']]}`}
+              <button onClick={() => 
+                setSkillPoints(prev => ({
+                  ...prev,
+                  [skill['name']]: Math.min(prev[skill['name']] + 1, maxSkillPoints)
+                  }))
+                }>
+                  +
+              </button>
+              <button onClick={() => 
+                setSkillPoints(prev => ({
+                  ...prev,
+                  [skill['name']]: Math.max(prev[skill['name']] - 1, 0)
+                  }))
+                }>
+                  -
+              </button>
+              {` modifier (${skill['attributeModifier']}): ${modifier}`}
+              {`, total: ${modifier + skillPoints[skill['name']]}`}
+            </div>
+          )})}
         </div>
       </section>   
     </div>
