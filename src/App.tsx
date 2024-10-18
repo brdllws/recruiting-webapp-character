@@ -10,7 +10,17 @@ function App() {
   const intelligence = useState<number>(0);
   const wisdom = useState<number>(0);
   const charisma = useState<number>(0);
-  const stateList = [strength, dexterity, constitution, intelligence, wisdom, charisma]
+  const stateList = [strength, dexterity, constitution, intelligence, wisdom, charisma];
+
+  const meetsReqs = (name) => {
+    for (let i = 0; i < stateList.length; i++) {
+      if (stateList[i][0] < CLASS_LIST[name][ATTRIBUTE_LIST[i]]) {
+        return false;
+      }
+    };
+    return true;
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -25,6 +35,11 @@ function App() {
               <button onClick={() => content[1](content[0]-1)}>-</button>
             </div>
           ))}
+        </div>
+        <div className="App-div">
+          <p>Barbarian {meetsReqs('Barbarian') ? '✅' : null}</p>
+          <p>Wizard {meetsReqs('Wizard') ? '✅' : null}</p>
+          <p>Bard {meetsReqs('Bard') ? '✅' : null}</p>
         </div>
       </section>   
     </div>
