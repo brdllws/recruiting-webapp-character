@@ -1,23 +1,32 @@
 import { useState } from 'react';
 import './App.css';
-import { ATTRIBUTE_LIST, CLASS_LIST, SKILL_LIST } from './consts.js';
+import { ATTRIBUTE_LIST, CLASS_LIST, SKILL_LIST } from './consts';
 
 
 function App() {
-  const [num, setNum] = useState<number>(0);
+  const strength = useState<number>(0);
+  const dexterity = useState<number>(0);
+  const constitution = useState<number>(0);
+  const intelligence = useState<number>(0);
+  const wisdom = useState<number>(0);
+  const charisma = useState<number>(0);
+  const stateList = [strength, dexterity, constitution, intelligence, wisdom, charisma]
   return (
     <div className="App">
       <header className="App-header">
         <h1>React Coding Exercise</h1>
       </header>
       <section className="App-section">
-        <div>
-          Value:
-          {num}
-          <button>+</button>
-          <button>-</button>
+        <div className="App-div">
+          {stateList.map((content, index) => (
+            <div key={index}>
+              {`${ATTRIBUTE_LIST[index]}: ${content[0]}`}
+              <button onClick={() => content[1](content[0]+1)}>+</button>
+              <button onClick={() => content[1](content[0]-1)}>-</button>
+            </div>
+          ))}
         </div>
-      </section>
+      </section>   
     </div>
   );
 }
